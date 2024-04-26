@@ -6,7 +6,7 @@ using namespace std;
 #include "vendor/stb_image/stb_image.h"
 #include <GL/glut.h>
 
-time_t prog = time(nullptr);
+time_t programStartTime = time(nullptr);
 
 class ImageScene : public Scene
 {
@@ -108,12 +108,10 @@ static void displayCallback();
 void renderSceneSequence(const vector<Scene *> &scenes)
 {
     time_t currentTime = time(nullptr);
-    currentTime -= prog;
+    currentTime -= programStartTime;
 
     for (const auto &scene : scenes)
     {
-        cout << currentTime << endl;
-        cout << scene->getStartTime() << endl;
         if (scene->getStartTime() <= currentTime && currentTime < scene->getEndTime())
         {
 
