@@ -1,0 +1,7 @@
+Scenes
+- Initial Rectangle Scenes (zoomin.cpp)
+- Circular inwards zoom on image of stairs
+- Puzzle pieces getting out of stairs while zooming #IMPORTANT
+- Camera rolls down to text of BELIEVE where LIE is stuck with toothpick ## research
+- Camera pans to next scene where 3 balls fall from 3D stairs
+- fall into a quad where the sound waves are drawn in bright colors (neon [pink green blue])
