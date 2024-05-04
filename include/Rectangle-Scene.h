@@ -1,6 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <GL/glut.h>
+
+using namespace std;
+
+class Scene;
+
 class position
 {
 private:
@@ -53,4 +58,93 @@ public:
             p[i].setY(p[i].getY() / 0.9f);
         }
     }
+};
+
+#define UPDATE_TIME 750000
+#define NO_OF_RECTANGLES 50
+
+float rotationAngle = 0.0f;
+float zoomScale = 1.0f;
+
+vector<Rectangle> v;
+void update(int value)
+{
+    for (int i = 0, n = v.size(); i < n; ++i)
+        v[i].incrementZ();
+
+    rotationAngle += 5.0f;
+    zoomScale += 0.001f;
+    glutPostRedisplay();
+    glutTimerFunc(UPDATE_TIME, update, 0);
+}
+
+void intialScene()
+{
+    Rectangle r;
+    position a[4];
+    a[0] = position(0.01, 0.0, 0.0);
+    a[1] = position(0.0, 0.01, 0.0);
+    a[2] = position(-0.01, 0.0, 0.0);
+    a[3] = position(0.0, -0.01, 0.0);
+    r = Rectangle(a);
+    v.push_back(r);
+    for (int i = 0; i < NO_OF_RECTANGLES; ++i)
+    {
+        position a0 = a[0];
+        for (int j = 0; j < 3; ++j)
+        {
+            a[j].setX((a[j].getX() + a[j + 1].getX()) / 2);
+            a[j].setY((a[j].getY() + a[j + 1].getY()) / 2);
+        }
+        a[3].setX((a[3].getX() + a0.getX()) / 2);
+        a[3].setY((a[3].getY() + a0.getY()) / 2);
+        r = Rectangle(a);
+        v.push_back(r);
+    }
+}
+
+class RectangleScene : public Scene
+{
+public:
+    RectangleScene(int id, time_t startTime, time_t endTime)
+        : Scene(id, startTime, endTime), rotationAngle(0.0f), zoomScale(1.0f)
+    {
+    }
+
+    void render() override
+    {
+        cout << "render called" << endl;
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
+        glScalef(zoomScale, zoomScale, zoomScale);
+
+        static bool initialized = false;
+        if (!initialized)
+        {
+            intialScene();
+            initialized = true;
+            cout << "Initialized" << endl;
+        }
+
+        for (int i = 0, n = v.size(); i < n; ++i)
+            v[i].draw();
+        glutSwapBuffers();
+        updateAnimation();
+    }
+
+    void updateAnimation()
+    {
+        for (int i = 0, n = v.size(); i < n; ++i)
+            v[i].incrementZ();
+
+        rotationAngle += 5.0f;
+        zoomScale += 0.001f;
+        glutPostRedisplay();
+        glutTimerFunc(UPDATE_TIME, update, 0);
+    }
+
+private:
+    float rotationAngle;
+    float zoomScale;
 };

@@ -2,7 +2,9 @@
 #include <iostream>
 using namespace std;
 #include <GL/glut.h>
+
 #include <Image-Scene.h>
+#include <Rectangle-Scene.h>
 
 time_t programStartTime = time(nullptr);
 
@@ -21,7 +23,6 @@ void renderSceneSequence(const vector<Scene *> &scenes)
     {
         if (scene->getStartTime() <= currentTime && currentTime < scene->getEndTime())
         {
-
             scene->render();
             break;
         }
@@ -44,6 +45,7 @@ static void displayCallback()
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
+
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(800, 600);
     glutCreateWindow("Animation");
@@ -51,10 +53,10 @@ int main(int argc, char **argv)
     glEnable(GL_DEPTH_TEST);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set clear color to black
-
     vector<Scene *> scenes = {
-        new ImageScene(1, 0.0, 1.0, "assets/stairs.png"),
-        new ImageScene(2, 1.0, 12.0, "assets/stairs.png"),
+        new RectangleScene(1, 0.0, 10.0),
+        // new ImageScene(1, 0.0, 1.0, "assets/stairs.png"),
+        new ImageScene(2, 10.0, 12.0, "assets/stairs.png"),
     };
 
     scenesRef = scenes;
