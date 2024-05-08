@@ -5,8 +5,8 @@
     "type": "shell",
     "label": "g++ build active file",
     "command": "/usr/bin/g++",
-    "args": ["-g", "${file}", "-o", "${fileDirname}/bin/${fileBasenameNoExtension}",
-    "-I", "${fileDirname}/include/","-lglut","-lGLU","-lGL"],
+    "args": ["-g", "${file}", "-o", "${fileDirname}/bin/${fileBasenameNoExtension}",    
+    "-I", "${fileDirname}/include/","-lglut","-lGLU","-lGL","-lsndfile"],
     "options": {
       "cwd": "/usr/bin"
     },
