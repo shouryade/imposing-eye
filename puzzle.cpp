@@ -111,11 +111,11 @@ void display()
 
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
+
     glTranslatef(0.0f, 0.0f, zoomedCameraZ);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPushMatrix();
-    glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, backgroundTextureID);
     glBegin(GL_QUADS);
