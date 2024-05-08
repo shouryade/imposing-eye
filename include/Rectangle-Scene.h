@@ -113,7 +113,6 @@ public:
 
     void render() override
     {
-        cout << "render called" << endl;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
         glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
@@ -124,7 +123,6 @@ public:
         {
             intialScene();
             initialized = true;
-            cout << "Initialized" << endl;
         }
 
         for (int i = 0, n = v.size(); i < n; ++i)

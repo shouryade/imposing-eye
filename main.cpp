@@ -9,7 +9,7 @@ using namespace std;
 
 time_t programStartTime = time(nullptr);
 
-static vector<Scene *> scenesRef; // Global variable to store the scenes reference
+static vector<Scene *> scenesRef;
 
 void renderSceneSequence(const vector<Scene *> &scenes);
 static void renderTimerCallback(int);
@@ -25,11 +25,11 @@ void renderSceneSequence(const vector<Scene *> &scenes)
         if (scene->getStartTime() <= currentTime && currentTime < scene->getEndTime())
         {
             scene->render();
-            glutPostRedisplay();
-            glutSwapBuffers();
             break;
         }
     }
+    glutPostRedisplay();
+    glutSwapBuffers();
 }
 
 static void displayCallback()
@@ -42,15 +42,16 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-    glEnable(GL_DEPTH_TEST); // Enable depth testing
+    glEnable(GL_DEPTH_TEST);
     glutInitWindowSize(800, 600);
     glutCreateWindow("Animation");
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set clear color to black
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
     vector<Scene *> scenes = {
-        new RectangleScene(1, 0.0, 10.0),
-        // new ImageScene(2, 8.0, 10.0, "assets/stairs.png"),
-        new PuzzleScene(2, 10.0, 15.0),
+        new RectangleScene(1, 0.0, 8.0),
+        new ImageScene(2, 8.0, 11.0, "assets/stairs.png"),
+        new PuzzleScene(2, 10.0, 20.0),
 
     };
 

@@ -196,7 +196,7 @@ void reshapePuzzle(int w, int h)
 
 void updatePuzzle(int value)
 {
-    // Update camera position and zoom factor
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     cameraZ += 0.01f; // Increment camera Z position for zoom in
     zoomFactor += 0.001f;
     glutPostRedisplay();
@@ -215,13 +215,9 @@ public:
     PuzzleScene(int id, float startTime, float endTime) : Scene(id, startTime, endTime) {}
     void render()
     {
-        static bool PuzzleSceneInitialized = false;
-        if (!PuzzleSceneInitialized)
-        {
-            initialize();
-            PuzzleSceneInitialized = true;
-        }
-
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        initialize();
         updatePuzzle(0);
         displayPuzzle();
     }
