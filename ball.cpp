@@ -138,23 +138,18 @@ void reshape(int w, int h)
 void update(int value)
 {
     glutPostRedisplay();
-    // 16 ms per frame (about 60 fps)
     glutTimerFunc(16, update, 0);
 }
 
 int main(int argc, char **argv)
 {
-    // Read audio file and extract waveform data
-    readAudio("audio.wav");
 
-    // Initialize GLUT and create window
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Sound Waves Visualization");
+    glutCreateWindow("StarWars tune waves");
 
-    // Set up OpenGL environment
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     glEnable(GL_DEPTH_TEST);
@@ -162,13 +157,11 @@ int main(int argc, char **argv)
     glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
 
-    // Set up callbacks
+    readAudio("audio.wav");
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
 
     glutTimerFunc(0, update, 0);
-
-    // Start the main loop
     glutMainLoop();
 
     return 0;

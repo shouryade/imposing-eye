@@ -12,7 +12,6 @@ time_t programStartTime = time(nullptr);
 static vector<Scene *> scenesRef;
 
 void renderSceneSequence(const vector<Scene *> &scenes);
-static void renderTimerCallback(int);
 static void displayCallback();
 
 void renderSceneSequence(const vector<Scene *> &scenes)
@@ -50,10 +49,8 @@ int main(int argc, char **argv)
 
     vector<Scene *> scenes = {
         new RectangleScene(1, 0.0, 8.0),
-        new ImageScene(2, 8.0, 11.0, "assets/stairs.png"),
-        new PuzzleScene(2, 10.0, 20.0),
-
-    };
+        new ImageScene(2, 8.0, 10.0, "assets/stairs.png"),
+        new PuzzleScene(3, 10.0, 400.0)};
 
     scenesRef = scenes;
 
