@@ -1,8 +1,6 @@
-#define STB_IMAGE_IMPLEMENTATION
+
 #include <GL/glut.h>
 #include <iostream>
-#include "vendor/stb_image/stb_image.h"
-
 using namespace std;
 
 // Constants for controls
@@ -16,7 +14,7 @@ int imageWidth4, imageHeight4, imageChannels4;         // Image dimensions and c
 GLuint backgroundTextureID;                            // Texture ID for the background image
 int imageWidth, imageHeight, imageChannels;            // Image dimensions and channels for the background image
 
-void init()
+void initPuzzle()
 {
     // Texture 1
     glGenTextures(1, &textureID1);
@@ -105,7 +103,7 @@ void init()
     stbi_image_free(backgroundImage);
 }
 
-void display()
+void displayPuzzle()
 {
     float zoomedCameraZ = cameraZ * zoomFactor;
     glClear(GL_COLOR_BUFFER_BIT);
@@ -186,7 +184,7 @@ void display()
     glutSwapBuffers();
 }
 
-void reshape(int w, int h)
+void reshapePuzzle(int w, int h)
 {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
@@ -196,26 +194,35 @@ void reshape(int w, int h)
     glLoadIdentity();
 }
 
-void update(int value)
+void updatePuzzle(int value)
 {
     // Update camera position and zoom factor
     cameraZ += 0.01f; // Increment camera Z position for zoom in
     zoomFactor += 0.001f;
     glutPostRedisplay();
-    glutTimerFunc(50, update, 0);
+    glutTimerFunc(50, updatePuzzle, 0);
 }
 
-int main(int argc, char **argv)
+class Scene;
+class PuzzleScene : public Scene
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-    glEnable(GL_DEPTH_TEST); // Enable depth testing
-    glutInitWindowSize(800, 600);
-    glutCreateWindow("OpenGL Transparent Texture");
-    init();
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutTimerFunc(50, update, 0);
-    glutMainLoop();
-    return 0;
-}
+public:
+    void initialize()
+    {
+        initPuzzle();
+        reshapePuzzle(800, 600); // Pass the window dimensions
+    }
+    PuzzleScene(int id, float startTime, float endTime) : Scene(id, startTime, endTime) {}
+    void render()
+    {
+        static bool PuzzleSceneInitialized = false;
+        if (!PuzzleSceneInitialized)
+        {
+            initialize();
+            PuzzleSceneInitialized = true;
+        }
+
+        updatePuzzle(0);
+        displayPuzzle();
+    }
+};
