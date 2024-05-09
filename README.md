@@ -2,6 +2,12 @@
 
 # Development
 
+You need to have `libsndfile` and `freeglut3` installed.
+
+```
+sudo apt install freeglut3-dev libsndfile-dev
+```
+
 Clone this repo.
 
 ```
